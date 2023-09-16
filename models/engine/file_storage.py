@@ -1,42 +1,43 @@
 #!/usr/bin/python3
 import json
+from os.path import exists
+from datetime import datetime
 
 
 class FileStorage:
+    """ Path to the JSON file """
     __file_path = "file.json"
+    """ Dictionary to store objects by class name and id """
     __objects = {}
 
     def all(self):
-        """ Returns the dictionary __objects """
+        """ Return the dictionary of objects """
         return self.__objects
 
     def new(self, obj):
-        """ Sets in __objects the obj with key <obj class name>.id """
+        """ Set a new object in the dictionary 
+            with key: <class name>.id """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
-        """ Serializes __objects to the JSON
-            file (path: __file_path) """
-        serialized_objects = {}
-        for key, value in self.__objects.items():
-            serialized_objects[key] = value.to_dict()
-        with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(serialized_objects, file)
+        """ Serialize __objects to JSON 
+            and save it to the file """
+        obj_dict = {}
+        for key, obj in self.__objects.items():
+            obj_dict[key] = obj.to_dict()
+        with open(self.__file_path, "w", encoding="utf-8") as file:
+            json.dump(obj_dict, file)
 
     def reload(self):
-        """ Deserializes the JSON file to __objects """
-        try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    """ Convert 'created_at' and 'updated_at'
-                        strings to datetime objects """
-                    value['created_at'] = datetime.strptime(value['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
-                    value['updated_at'] = datetime.strptime(value['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-                    """ Create an instance and store it in __objects """
-                    obj = globals()[class_name](**value)
-                    self.__objects[key] = obj
-        except FileNotFoundError:
-            pass
+        """ Deserialize JSON from the 
+            file to __objects (if the file exists) """
+        if exists(self.__file_path):
+            with open(self.__file_path, "r", encoding="utf-8") as file:
+                obj_dict = json.load(file)
+            for key, obj_data in obj_dict.items():
+                class_name, obj_id = key.split(".")
+                cls = class_name
+                obj_data["created_at"] = datetime.strptime(obj_data["created_at"], '%Y-%m-%dT%H:%M:%S.%f')
+                obj_data["updated_at"] = datetime.strptime(obj_data["updated_at"], '%Y-%m-%dT%H:%M:%S.%f')
+                self.__objects[key] = eval(cls)(**obj_data)
