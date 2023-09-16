@@ -36,7 +36,7 @@ def run_non_interactive(input_file):
     console.use_rawinput = False  # Disable raw input (non-interactive mode)
     with open(input_file, "r") as f:
         lines = f.readlines()  # Read all lines from the input file
-        print()  # Print an empty line before the message
+        print("\n")  # Print an empty line before the message
         for line in lines:
             console.onecmd(line.strip())  # Process each line as a command
 
