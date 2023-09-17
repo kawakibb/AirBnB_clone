@@ -28,9 +28,10 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, arg):
         """quit the console."""
         return True
+
     def handle_empty_line(self):
-    """an empty line."""
-    pass
+        """an empty line."""
+        pass
 # Function to run the console in interactive mode
 
 
