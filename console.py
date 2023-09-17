@@ -104,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_help(self, arg):
             """Show help message."""
-            print("Documented commands (type help <topic>):")
+            print("\nDocumented commands (type help <topic>):")
             print("========================================")
             print("EOF  help  quit")
 
