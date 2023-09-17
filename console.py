@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Console module for the HBNB project.
+"""
+
 import cmd
 
 class HBNBCommand(cmd.Cmd):
@@ -9,9 +13,13 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, arg):
-        """Exit the program on EOF (Ctrl+D)"""
+        """Exit the program with EOF (Ctrl+D)"""
         print()
         return True
+
+    def emptyline(self):
+        """Do nothing on an empty line"""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
