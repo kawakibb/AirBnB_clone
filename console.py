@@ -94,6 +94,33 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** class doesn't exist **")
 
+    def help_quit(self):
+        """
+        Prints the help documentation for the 'quit' command.
+        """
+        print("Exits the program with formatting\n")
+
+    def help_EOF(self):
+        """ help EOF Prints the help documentation for EOF """
+        print("Exits the program without formatting\n")
+
+    def help_create(self):
+        """ help_create Help information for the create method """
+        print("Creates a class of any type")
+        print("[Usage]: create <className>\n")
+
+
+    def help_show(self):
+        """ help_show Help information for the show command """
+        print("Shows an individual instance of a class")
+        print("[Usage]: show <className> <objectId>\n")
+
+    def help_destroy(self):
+        """ help_destroy Help information for the destroy command """
+        print("Destroys an individual instance of a class")
+        print("[Usage]: destroy <className> <objectId>\n")
+
+
     def do_update(self, arg):
         """Update an instance attribute."""
         args = arg.split()
