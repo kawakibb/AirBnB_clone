@@ -1,6 +1,12 @@
+#!/usr/bin/python3
+"""
+Console module for the HBNB project.
+"""
+
 import cmd
 from models.base_model import BaseModel
 from models import storage
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -38,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if len(args) < 2:
+                if len(args) == 1:
                     print("** instance id missing **")
                 else:
                     instance_id = args[1]
@@ -59,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if len(args) < 2:
+                if len(args) == 1:
                     print("** instance id missing **")
                 else:
                     instance_id = args[1]
@@ -112,7 +118,17 @@ class HBNBCommand(cmd.Cmd):
                         if len(args) < 4:
                             print("** value missing **")
                             return
-                        attribute_value = args[3]
+                        attribute_value_str = args[3]
+                        
+                        # Try to cast the attribute value to int, float, or leave it as a string
+                        try:
+                            attribute_value = int(attribute_value_str)
+                        except ValueError:
+                            try:
+                                attribute_value = float(attribute_value_str)
+                            except ValueError:
+                                attribute_value = attribute_value_str
+                        
                         instance = all_objs[key]
                         setattr(instance, attribute_name, attribute_value)
                         instance.save()
@@ -122,6 +138,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
             except NameError:
                 print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
