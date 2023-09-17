@@ -94,6 +94,22 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** class doesn't exist **")
 
+
+    def help_all(self):
+        """ help_all Help information for the all command """
+        print("Shows all objects, or all of a class")
+        print("[Usage]: all <className>\n")
+
+    def help_count(self):
+        """ print help information for the count"""
+        print("Usage: count <class_name>")
+
+    def help_update(self):
+        """ Help information for the update class """
+        print("Updates an object with new information")
+        print("Usage: update <className> <id> <attName> <attVal>\n")
+
+
     def help_quit(self):
         """
         Prints the help documentation for the 'quit' command.
