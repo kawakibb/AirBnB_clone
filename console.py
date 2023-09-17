@@ -7,7 +7,7 @@ import sys  # Import the 'sys' module to handle command-line arguments
 # Define the RbnbConsole class, which inherits from cmd.Cmd
 
 
-class RbnbConsole(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "  # Set the prompt (command prompt) for the console
 
     # Method for the 'help' command
@@ -26,20 +26,22 @@ class RbnbConsole(cmd.Cmd):
 
     # Method for the 'quit' command
     def do_quit(self, arg):
-        """Exit the console."""
+        """quit the console."""
         return True
-
+    def handle_empty_line(self):
+    """an empty line."""
+    pass
 # Function to run the console in interactive mode
 
 
 def run_interactive():
-    RbnbConsole().cmdloop()
+    HBNBCommand().cmdloop()
 
 # Function to run the console in non-interactive mode with an input file
 
 
 def run_non_interactive(input_file):
-    console = RbnbConsole()
+    console = HBNBCommand()
     console.use_rawinput = False  # Disable raw input (non-interactive mode)
     with open(input_file, "r") as f:
         lines = f.readlines()  # Read all lines from the input file
