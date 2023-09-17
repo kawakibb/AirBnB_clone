@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 
 """ Console Module """
-import cmd  # Import the 'cmd' module to create an interactive console
-import sys  # Import the 'sys' module to handle command-line arguments
+import cmd 
+import sys  
 
 # Define the RbnbConsole class, which inherits from cmd.Cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = "(hbnb) "  # Set the prompt (command prompt) for the console
+    prompt = "(hbnb) "
+    
+    # Set the prompt (command prompt) for the console
 
     # Method for the 'help' command
     def do_help(self, arg):
@@ -32,13 +34,112 @@ class HBNBCommand(cmd.Cmd):
     def handle_empty_line(self):
         """an empty line."""
         pass
-# Function to run the console in interactive mode
+
+    def do_create(self, args):
+        """ Create an object of any class.Usage: create <className> """
+        if not args:
+            print("** class name missing **")
+            return
+        elif args not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        new_instance = HBNBCommand.classes[args]()
+        storage.save()
+        print(new_instance.id)
+        storage.save()
+
+    def help_create(self):
+        """
+        Help information for the create method.
+        """
+        print("Creates an instance of a class")
+        print("[Usage]: create <className>\n")
+
+    def do_show(self, args):
+        """
+        Show an individual object.
+        
+        Usage: show <className> <objectId>
+        """
+        new = args.partition(" ")
+        c_name = new[0]
+        c_id = new[2]
+
+        # Guard against trailing args
+        if c_id and ' ' in c_id:
+            c_id = c_id.partition(' ')[0]
+
+        if not c_name:
+            print("** class name missing **")
+            return
+
+        if c_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not c_id:
+            print("** instance id missing **")
+            return
+
+        key = c_name + "." + c_id
+        try:
+            print(storage._FileStorage__objects[key])
+        except KeyError:
+            print("** no instance found **")
+
+    def help_show(self):
+        """
+        Help information for the show command.
+        """
+        print("Shows an individual instance of a class")
+        print("[Usage]: show <className> <objectId>\n")
+
+    def do_destroy(self, args):
+        """
+        Destroys a specified object.
+        
+        Usage: destroy <className> <objectId>
+        """
+        new = args.partition(" ")
+        c_name = new[0]
+        c_id = new[2]
+        if c_id and ' ' in c_id:
+            c_id = c_id.partition(' ')[0]
+
+        if not c_name:
+            print("** class name missing **")
+            return
+
+        if c_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not c_id:
+            print("** instance id missing **")
+            return
+
+        key = c_name + "." + c_id
+
+        try:
+            del(storage.all()[key])
+            storage.save()
+        except KeyError:
+            print("** no instance found **")
+
+    def help_destroy(self):
+        """
+        Help information for the destroy command.
+        """
+        print("Destroys an individual instance of a class")
+        print("[Usage]: destroy <className> <objectId>\n")
+    
+# THE Function run the console in interactive mode
 
 
 def run_interactive():
     HBNBCommand().cmdloop()
 
-# Function to run the console in non-interactive mode with an input file
+# This Function run the console in non-interactive mode with an input file
 
 
 def run_non_interactive(input_file):
