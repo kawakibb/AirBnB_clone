@@ -1,8 +1,3 @@
-#!/usr/bin/python3
-"""
-Console module for the HBNB project.
-"""
-
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -43,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if len(args) == 1:
+                if len(args) < 2:
                     print("** instance id missing **")
                 else:
                     instance_id = args[1]
@@ -64,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if len(args) == 1:
+                if len(args) < 2:
                     print("** instance id missing **")
                 else:
                     instance_id = args[1]
@@ -87,8 +82,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if class_name in BaseModel.__subclasses__():
-                    print([str(v) for k, v in all_objs.items() if class_name in k])
+                if class_name in [cls.__name__ for cls in BaseModel.__subclasses__()]:
+                    print([str(v) for k, v in all_objs.items() if k.split('.')[0] == class_name])
                 else:
                     print("** class doesn't exist **")
             except NameError:
@@ -102,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                if class_name in BaseModel.__subclasses__():
+                if class_name in [cls.__name__ for cls in BaseModel.__subclasses__()]:
                     if len(args) < 2:
                         print("** instance id missing **")
                         return
