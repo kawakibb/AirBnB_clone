@@ -6,6 +6,10 @@ Console module for the HBNB project.
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
