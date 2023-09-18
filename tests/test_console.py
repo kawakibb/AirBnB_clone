@@ -78,3 +78,7 @@ def test_help_quit(self):
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(h, output.getvalue().strip())
 
+
+
+if __name__ == "__main__":
+    unittest.main()
