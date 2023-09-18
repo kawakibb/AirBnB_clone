@@ -9,7 +9,7 @@ from models import storage
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
-
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
