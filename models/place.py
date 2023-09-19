@@ -1,17 +1,6 @@
-#!/usr/bin/python3
-"""Place class."""
-
 from models.base_model import BaseModel
 
 class Place(BaseModel):
-    """Define a place.
-        city_id (str) user_id (str) name (str)
-        number_rooms (int)number_bathrooms (int)
-        max_guest (int)price_by_night (int)
-        latitude (float longitude (float)
-        amenity_ids (list)
-    """
-
     city_id = ""
     user_id = ""
     name = ""
