@@ -11,7 +11,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        """Create a new instance of BaseModel, save it, and print its id."""
+        """Create a new instance, save it, and print its id."""
         if not line:
             print("** class name missing **")
             return
@@ -113,11 +113,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             value = eval(args[3])
         except (SyntaxError, NameError):
-            print("** value missing **")
-            return
-        # Ensure that id, created_at, and updated_at cannot be updated
-        if attribute_name in ["id", "created_at", "updated_at"]:
-            return
+            value = args[3]
         setattr(instance, attribute_name, value)
         instance.save()
 
