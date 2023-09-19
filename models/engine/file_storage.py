@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import json
 from os.path import exists
-from datetime import datetime
 
 class FileStorage:
     # Path to the JSON file
@@ -34,6 +33,6 @@ class FileStorage:
             for key, obj_data in obj_dict.items():
                 class_name, obj_id = key.split(".")
                 cls = class_name
-                obj_data["created_at"] = datetime.strptime(obj_data["created_at"], '%Y-%m-%dT%H:%M:%S.%f')
-                obj_data["updated_at"] = datetime.strptime(obj_data["updated_at"], '%Y-%m-%dT%H:%M:%S.%f')
+                obj_dict[key]["created_at"] = datetime.strptime(obj_dict[key]["created_at"], '%Y-%m-%dT%H:%M:%S.%f')
+                obj_dict[key]["updated_at"] = datetime.strptime(obj_dict[key]["updated_at"], '%Y-%m-%dT%H:%M:%S.%f')
                 self.__objects[key] = eval(cls)(**obj_data)
